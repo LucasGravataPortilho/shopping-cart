@@ -6,8 +6,6 @@ const fetchProducts = async (param) => {
   try {
     const response = await fetch(url);
     const json = await response.json();
-    const { results } = json;
-    const { id, title, thumbnail } = results;
     return json;
   } catch (error) {
     return error;
