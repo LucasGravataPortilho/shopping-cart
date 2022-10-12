@@ -56,6 +56,8 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  */
 const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
 
+const cartItems = document.querySelector('.cart__items');
+
 const cartItemClickListener = ({ target }) => {
   target.remove();
 };
@@ -77,7 +79,6 @@ const createCartItemElement = ({ id, title, price }) => {
 };
 
 const getItemFetch = async (product) => {
-  const cartItems = document.querySelector('.cart__items');
   const data = await fetchItem(product);
   cartItems.appendChild(createCartItemElement(data));
 };
