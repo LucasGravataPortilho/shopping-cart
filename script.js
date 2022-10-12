@@ -60,6 +60,7 @@ const cartItems = document.querySelector('.cart__items');
 
 const cartItemClickListener = ({ target }) => {
   target.remove();
+  saveCartItems(cartItems.innerHTML);
 };
 
 /**
@@ -81,6 +82,7 @@ const createCartItemElement = ({ id, title, price }) => {
 const getItemFetch = async (product) => {
   const data = await fetchItem(product);
   cartItems.appendChild(createCartItemElement(data));
+  saveCartItems(cartItems.innerHTML);
 };
 
 const getId = (buttons) => {
@@ -103,4 +105,6 @@ const showElements = async () => {
   getId(btn);
 };
 
-window.onload = () => { showElements(); };
+cartItems.addEventListener('click', cartItemClickListener);
+
+window.onload = () => { showElements(); cartItems.innerHTML = getSavedCartItems(); };
