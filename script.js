@@ -58,21 +58,25 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
 
 const cartItems = document.querySelector('.cart__items');
 
-// const totalPrice = () => {
-//   const precoTotal = document.querySelector('.total-price');
-//   let valor = 0;
+const totalPrice = () => {
+  const precoTotal = document.querySelector('.total-price');
+  let valor = 0;
+  const filhos = cartItems.children;
 
-//   cartItems.forEach((produto) => {
-//     valor += parseFloat(produto.value);
-//   });
-//   precoTotal.innerHTML = valor;
-// };
+  for (let index = 0; index < filhos.length; index += 1) {
+    const valorIndividual = Number(filhos[index].dataset.price);
+    valor += valorIndividual;
+  }
+  precoTotal.innerHTML = `Valor Total: ${valor}`;
+};
 
 const eraseCart = () => {
   const btn = document.querySelector('.empty-cart');
 
   btn.addEventListener('click', () => {
     cartItems.innerHTML = null;
+    localStorage.clear();
+    totalPrice();
   });
 };
 
@@ -81,7 +85,7 @@ eraseCart();
 const cartItemClickListener = ({ target }) => {
   target.remove();
   saveCartItems(cartItems.innerHTML);
-  // totalPrice();
+  totalPrice();
 };
 
 /**
@@ -94,6 +98,7 @@ const cartItemClickListener = ({ target }) => {
  */
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
+  li.dataset.price = price;
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
@@ -104,7 +109,7 @@ const getItemFetch = async (product) => {
   const data = await fetchItem(product);
   cartItems.appendChild(createCartItemElement(data));
   saveCartItems(cartItems.innerHTML);
-  // totalPrice();
+  totalPrice();
 };
 
 const getId = (buttons) => {
