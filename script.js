@@ -58,9 +58,30 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
 
 const cartItems = document.querySelector('.cart__items');
 
+// const totalPrice = () => {
+//   const precoTotal = document.querySelector('.total-price');
+//   let valor = 0;
+
+//   cartItems.forEach((produto) => {
+//     valor += parseFloat(produto.value);
+//   });
+//   precoTotal.innerHTML = valor;
+// };
+
+const eraseCart = () => {
+  const btn = document.querySelector('.empty-cart');
+
+  btn.addEventListener('click', () => {
+    cartItems.innerHTML = null;
+  });
+};
+
+eraseCart();
+
 const cartItemClickListener = ({ target }) => {
   target.remove();
   saveCartItems(cartItems.innerHTML);
+  // totalPrice();
 };
 
 /**
@@ -83,6 +104,7 @@ const getItemFetch = async (product) => {
   const data = await fetchItem(product);
   cartItems.appendChild(createCartItemElement(data));
   saveCartItems(cartItems.innerHTML);
+  // totalPrice();
 };
 
 const getId = (buttons) => {
