@@ -82,6 +82,20 @@ const eraseCart = () => {
 
 eraseCart();
 
+const loading = () => {
+  const load = document.createElement('span');
+  load.innerHTML = 'carregando...';
+  load.className = 'loading';
+  const sectionCart = document.querySelector('.cart');
+  sectionCart.appendChild(load);
+};
+
+const loaded = () => {
+  const load = document.querySelector('.loading');
+  const sectionCart = document.querySelector('.cart');
+  sectionCart.removeChild(load);
+};
+
 const cartItemClickListener = ({ target }) => {
   target.remove();
   saveCartItems(cartItems.innerHTML);
@@ -130,7 +144,10 @@ const showElements = async () => {
   });
   const btn = document.querySelectorAll('.item__add');
   getId(btn);
+  loaded();
 };
+
+loading();
 
 cartItems.addEventListener('click', cartItemClickListener);
 
